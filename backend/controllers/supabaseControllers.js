@@ -1,4 +1,4 @@
-const db = require("../db/db.config");
+const supabase = require("../db/supabaseClient.js");
 const {
   namePattern,
   emailPattern,
@@ -7,8 +7,8 @@ const {
   validateInput,
 } = require("../utils/validation");
 
-exports.submitUser = (req, res) => {
-  const { userFirstName, userLastName, userEmail, userAge, userEducation } = req.body;
+async function submitUser(req, res) {
+    const { userFirstName, userLastName, userEmail, userAge, userEducation } = req.body;
   const errors = [];
 
   if (!validateInput(userFirstName, namePattern)) {
@@ -29,53 +29,58 @@ exports.submitUser = (req, res) => {
   if (errors.length > 0) {
     return res.status(400).json({ status: "error", errors });
   }
-
-  const query = `INSERT INTO users (firstName, lastName, email, age, education) VALUES (?, ?, ?, ?, ?)`;
-  db.query(
-    query,
-    [userFirstName, userLastName, userEmail, userAge, userEducation],
-    (err, result) => {
-      if (err) {
-        console.error("Error inserting data:", err);
+    const { error } = await supabase
+  .from('users')
+  .insert({ firstName: userFirstName, lastName: userLastName, email: userEmail, age: userAge, education: userEducation });
+    if (error) {
+        console.error("Error inserting data:", error);
         return res.status(500).json({ status: "error", message: "Database error" });
-      }
-      res.status(200).json({ status: "success", message: "Form submitted successfully!" });
     }
-  );
-};
+    res.status(200).json({ status: "success", message: "Form submitted successfully!" });
+}
 
-exports.getAllUsers = (req, res) => {
-  db.query("SELECT * FROM users", (err, results) => {
-    if (err) {
-      return res.status(500).json({ status: "error", errors: ["Database error"] });
+async function getAllUsers(req, res) {
+    const { results, error } = await supabase
+  .from('users')
+  .select('*');
+    if (error) {
+        return res.status(500).json({ status: "error", errors: ["Database error"] });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ status: "error", errors: ["No users found"] });
     }
     res.json({ status: "success", results });
-  });
-};
+}
 
-exports.deleteUser = (req, res) => {
-  const userId = req.params.id;
-  db.query("DELETE FROM users WHERE id = ?", [userId], (err, result) => {
-    if (err) {
-      return res.status(500).json({ status: "error", errors: ["Database error"] });
+async function deleteUser(req, res) { 
+    const userId = req.params.id;
+
+    const { result, error } = await supabase
+  .from('users')
+  .delete()
+  .eq('id', userId);
+    if (error) {
+        return res.status(500).json({ status: "error", errors: ["Database error"] });
     }
     if (result.affectedRows === 0) {
       return res.status(404).json({ status: "error", errors: ["User not found"] });
     }
-    res.json({ status: "success", message: "Submission deleted successfully!" });
-  });
-};
+    res.status(200).json({ status: "success", message: "User deleted successfully!" });
+}
 
-exports.updateUser = (req, res) => {
-  const userId = req.params.id;
-  const { userFirstName, userLastName, userEmail, userAge, userEducation } = req.body;
+async function updateUser(req, res) {
+    const userId = req.params.id;
+    const { userFirstName, userLastName, userEmail, userAge, userEducation } = req.body;
+    const errors = [];
 
-  db.query("SELECT * FROM users WHERE id = ?", [userId], (err, results) => {
+    const { results, err } = await supabase
+  .from('users')
+  .select('*');
     if (err) {
-      return res.status(500).json({ status: "error", errors: ["Database error"] });
+        return res.status(500).json({ status: "error", errors: ["Database error"] });
     }
     if (results.length === 0) {
-      return res.status(404).json({ status: "error", errors: ["User not found"] });
+      return res.status(404).json({ status: "error", errors: ["No users found"] });
     }
 
     const current = results[0];
@@ -100,20 +105,25 @@ exports.updateUser = (req, res) => {
     if (!validateInput(updatedEducation, educationPattern)) {
       return res.status(400).json({ status: "error", errors: ["Invalid education"] });
     }
+    if (errors.length > 0) {
+        return res.status(400).json({ status: "error", errors });
+    }
 
-    const query = `UPDATE users SET firstName = ?, lastName = ?, email = ?, age = ?, education = ? WHERE id = ?`;
-    db.query(
-      query,
-      [updatedFirstName, updatedLastName, updatedEmail, updatedAge, updatedEducation, userId],
-      (err, result) => {
-        if (err) {
-          return res.status(500).json({ status: "error", errors: ["Database error"] });
-        }
-        if (result.affectedRows === 0) {
-          return res.status(404).json({ status: "error", errors: ["User not found"] });
-        }
-        res.json({ status: "success", message: "Submission updated successfully!" });
-      }
-    );
-  });
+    const { error } = await supabase
+  .from('users')
+  .update({ firstName: updatedFirstName, lastName: updatedLastName, email: updatedEmail, age: updatedAge, education: updatedAge })
+  .eq('id', userId);
+    
+    if (error) {
+        return res.status(500).json({ status: "error", message: "Database error" });
+    }
+    
+    res.status(200).json({ status: "success", message: "User updated successfully!" });
+}
+
+module.exports = {
+  submitUser,
+  getAllUsers,
+  deleteUser,
+  updateUser,
 };

@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const userController = require("../controllers/userController");
+const userController = require("../controllers/supabaseControllers.js");
 
 router.post("/submit", userController.submitUser);
 router.get("/submissions", userController.getAllUsers);
