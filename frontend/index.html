@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Management System</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app-container">
+      <!-- Header with Navigation -->
+      <header class="header">
+        <div class="header-container">
+          <!-- Logo/Brand -->
+          <div class="brand">
+            <h1>User Management</h1>
+          </div>
+
+          <!-- Desktop Navigation -->
+          <nav class="nav-desktop">
+            <ul class="nav-menu">
+              <li class="nav-item">
+                <a href="#add-user" class="nav-link">
+                  <span class="nav-icon">➕</span>
+                  <span class="nav-text">Add User</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#users-table" class="nav-link">
+                  <span class="nav-icon">👥</span>
+                  <span class="nav-text">View Users</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#delete-user" class="nav-link">
+                  <span class="nav-icon">🗑️</span>
+                  <span class="nav-text">Delete User</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="#update-user" class="nav-link">
+                  <span class="nav-icon">✏️</span>
+                  <span class="nav-text">Update User</span>
+                </a>
+              </li>
+            </ul>
+          </nav>
+
+          <!-- Header Actions -->
+          <div class="header-actions">
+            <button class="theme-toggle" id="themeToggle">
+              <span class="theme-icon">🌙</span>
+            </button>
+            
+            <!-- Hamburger Menu Button -->
+            <button class="hamburger-menu" id="hamburgerMenu">
+              <span class="hamburger-line"></span>
+              <span class="hamburger-line"></span>
+              <span class="hamburger-line"></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Mobile Navigation -->
+        <nav class="nav-mobile" id="navMobile">
+          <ul class="nav-menu-mobile">
+            <li class="nav-item">
+              <a href="#add-user" class="nav-link">
+                <span class="nav-icon">➕</span>
+                <span class="nav-text">Add User</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#users-table" class="nav-link">
+                <span class="nav-icon">👥</span>
+                <span class="nav-text">View Users</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#delete-user" class="nav-link">
+                <span class="nav-icon">🗑️</span>
+                <span class="nav-text">Delete User</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="#update-user" class="nav-link">
+                <span class="nav-icon">✏️</span>
+                <span class="nav-text">Update User</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <!-- Main Content -->
+      <main class="main-content">
+        <!-- Add User Section -->
+        <section id="add-user" class="section add-user-section">
+          <div class="section-header">
+            <h2>Add New User</h2>
+          </div>
+          <div class="card">
+            <form class="user-form" id="addUserForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="first-name">First Name</label>
+                  <input
+                    type="text"
+                    id="first-name"
+                    name="userFirstName"
+                    required
+                    minlength="3"
+                    placeholder="Enter first name"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="last-name">Last Name</label>
+                  <input
+                    type="text"
+                    name="userLastName"
+                    id="last-name"
+                    required
+                    minlength="3"
+                    placeholder="Enter last name"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="email">Email</label>
+                  <input 
+                    type="email" 
+                    name="userEmail" 
+                    id="email" 
+                    required 
+                    placeholder="Enter email address"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="age">Age</label>
+                  <input
+                    type="number"
+                    name="userAge"
+                    id="age"
+                    min="1"
+                    max="120"
+                    required
+                    placeholder="Enter age"
+                  />
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="education">Education</label>
+                  <input 
+                    type="text" 
+                    name="UserEducation" 
+                    id="education" 
+                    placeholder="Enter education level"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-primary">
+                <span class="btn-text">Add User</span>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Users Table Section -->
+        <section id="users-table" class="section users-section">
+          <div class="section-header">
+            <h2>All Users</h2>
+            <button class="btn btn-secondary" id="refreshBtn">
+              <span class="btn-text">Refresh</span>
+            </button>
+          </div>
+          <div class="card">
+            <div class="table-container">
+              <table class="users-table">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Email</th>
+                    <th>Age</th>
+                    <th>Education</th>
+                  </tr>
+                </thead>
+                <tbody id="tbody">
+                  <!-- Data will be populated by JavaScript -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- Delete User Section -->
+        <section id="delete-user" class="section delete-user-section">
+          <div class="section-header">
+            <h2>Delete User</h2>
+          </div>
+          <div class="card">
+            <form class="delete-form" id="deleteForm">
+              <div class="form-group">
+                <label for="delete-id">User ID</label>
+                <input
+                  type="number"
+                  id="delete-id"
+                  min="1"
+                  name="deleteId"
+                  placeholder="Enter user ID to delete"
+                  required
+                />
+              </div>
+              <button type="submit" class="btn btn-danger">
+                <span class="btn-text">Delete User</span>
+              </button>
+            </form>
+          </div>
+        </section>
+
+        <!-- Update User Section -->
+        <section id="update-user" class="section update-user-section">
+          <div class="section-header">
+            <h2>Update User</h2>
+          </div>
+          <div class="card">
+            <form class="update-form" id="updateForm">
+              <div class="form-group">
+                <label for="update-id">User ID</label>
+                <input
+                  type="number"
+                  id="update-id"
+                  name="updateId"
+                  placeholder="Enter user ID to update"
+                  min="1"
+                  pattern="^[1-9]\d*$"
+                  required
+                />
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label for="update-first-name">First Name</label>
+                  <input
+                    type="text"
+                    id="update-first-name"
+                    name="updateFirstName"
+                    minlength="3"
+                    placeholder="New first name"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="update-last-name">Last Name</label>
+                  <input
+                    type="text"
+                    name="updateLastName"
+                    id="update-last-name"
+                    minlength="3"
+                    placeholder="New last name"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="update-email">Email</label>
+                  <input 
+                    type="email" 
+                    name="updateEmail" 
+                    id="update-email" 
+                    placeholder="New email address"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="update-age">Age</label>
+                  <input
+                    type="number"
+                    name="updateAge"
+                    id="update-age"
+                    min="1"
+                    max="120"
+                    placeholder="New age"
+                  />
+                </div>
+
+                <div class="form-group full-width">
+                  <label for="update-education">Education</label>
+                  <input 
+                    type="text" 
+                    name="updateEducation" 
+                    id="update-education" 
+                    placeholder="New education level"
+                  />
+                </div>
+              </div>
+
+              <button type="submit" class="btn btn-warning">
+                <span class="btn-text">Update User</span>
+              </button>
+            </form>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
+</html>
