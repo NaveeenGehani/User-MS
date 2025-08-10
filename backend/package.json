@@ -1,13 +1,13 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "this is the backend of user form.",
+  "description": "This is the backend of user management system..",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Naveen Kumar",
+  "author": "Naveen Gehani",
   "license": "ISC",
   "dependencies": {
     "@supabase/supabase-js": "^2.54.0",
