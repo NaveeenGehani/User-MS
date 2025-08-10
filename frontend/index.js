@@ -182,7 +182,7 @@ addUserForm.addEventListener("submit", async function (event) {
     submitBtn.querySelector('.btn-text').textContent = 'Adding...';
     
     try {
-      const response = await fetch("http://localhost:3000/api/submit", {
+      const response = await fetch("https://user-ms-xaam.vercel.app/api/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -227,7 +227,7 @@ addUserForm.addEventListener("submit", async function (event) {
 // Load Submissions
 const loadSubmissions = async () => {
   try {
-    const response = await fetch("http://localhost:3000/api/submissions");
+    const response = await fetch("https://user-ms-xaam.vercel.app/api/submissions");
     const data = await response.json();
     
     if (data.status === "success") {
@@ -287,7 +287,7 @@ deleteForm.addEventListener("submit", async function (event) {
   deleteBtn.querySelector('.btn-text').textContent = 'Deleting...';
   
   try {
-    const response = await fetch(`http://localhost:3000/api/submissions/${userId}`, {
+    const response = await fetch(`https://user-ms-xaam.vercel.app/api/submissions/${userId}`, {
       method: "DELETE",
     });
     
@@ -323,18 +323,18 @@ updateForm.addEventListener("submit", async function (event) {
   event.preventDefault();
   
   const updateId = document.getElementById("update-id").value.trim();
-  const userFirstName = document.getElementById("update-first-name").value.trim();
-  const userLastName = document.getElementById("update-last-name").value.trim();
-  const userEmail = document.getElementById("update-email").value.trim();
-  const userAge = document.getElementById("update-age").value.trim();
-  const userEducation = document.getElementById("update-education").value.trim();
+  const updateFirstName = document.getElementById("update-first-name").value.trim();
+  const updateLastName = document.getElementById("update-last-name").value.trim();
+  const updateEmail = document.getElementById("update-email").value.trim();
+  const updateAge = document.getElementById("update-age").value.trim();
+  const updateEducation = document.getElementById("update-education").value.trim();
   
   if (!updateId) {
     showNotification("Please enter a valid user ID to update.", "error");
     return;
   }
   
-  if (!userFirstName && !userLastName && !userEmail && !userAge && !userEducation) {
+  if (!updateFirstName && !updateLastName && !updateEmail && !updateAge && !updateEducation) {
     showNotification("Please provide at least one field to update.", "error");
     return;
   }
@@ -347,17 +347,17 @@ updateForm.addEventListener("submit", async function (event) {
   updateBtn.querySelector('.btn-text').textContent = 'Updating...';
   
   try {
-    const response = await fetch(`http://localhost:3000/api/submissions/${updateId}`, {
+    const response = await fetch(`https://user-ms-xaam.vercel.app/api/submissions/${updateId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        userFirstName,
-        userLastName,
-        userEmail,
-        userAge,
-        userEducation,
+        updateFirstName,
+        updateLastName,
+        updateEmail,
+        updateAge,
+        updateEducation
       }),
     });
     

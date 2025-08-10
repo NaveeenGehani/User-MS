@@ -98,6 +98,7 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+  cursor: pointer;
 }
 
 /* Desktop Navigation */
@@ -278,6 +279,8 @@ body {
   font-weight: 600;
   color: var(--text-primary);
   margin: 0;
+  text-decoration: underline;
+  cursor: default;
 }
 
 /* Cards */
@@ -430,6 +433,7 @@ body {
   padding: 0.75rem 1rem;
   text-align: left;
   border-bottom: 1px solid var(--border-color);
+  font-weight: 500;
 }
 
 .users-table th {
