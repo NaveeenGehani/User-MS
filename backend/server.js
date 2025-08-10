@@ -8,9 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const corsOptions = {
-  origin: process.env.CORS_ORIGIN || "http://localhost:3000",
-  methods: "GET,PUT,POST,DELETE",
-  allowedHeaders: "Content-Type"
+  origin: process.env.CORS_ORIGIN
 }
 app.use(cors(corsOptions));
 app.use(express.json());
