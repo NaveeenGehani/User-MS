@@ -182,7 +182,7 @@ addUserForm.addEventListener("submit", async function (event) {
     submitBtn.querySelector('.btn-text').textContent = 'Adding...';
     
     try {
-      const response = await fetch("https://user-ms-xaam.vercel.app/api/submit", {
+      const response = await fetch("https://user-ms-beta.vercel.app/api/submit", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -227,7 +227,7 @@ addUserForm.addEventListener("submit", async function (event) {
 // Load Submissions
 const loadSubmissions = async () => {
   try {
-    const response = await fetch("https://user-ms-xaam.vercel.app/api/submissions");
+    const response = await fetch("https://user-ms-beta.vercel.app/api/submissions");
     const data = await response.json();
     
     if (data.status === "success") {
@@ -287,7 +287,7 @@ deleteForm.addEventListener("submit", async function (event) {
   deleteBtn.querySelector('.btn-text').textContent = 'Deleting...';
   
   try {
-    const response = await fetch(`https://user-ms-xaam.vercel.app/api/submissions/${userId}`, {
+    const response = await fetch(`https://user-ms-beta.vercel.app/api/submissions/${userId}`, {
       method: "DELETE",
     });
     
@@ -347,7 +347,7 @@ updateForm.addEventListener("submit", async function (event) {
   updateBtn.querySelector('.btn-text').textContent = 'Updating...';
   
   try {
-    const response = await fetch(`https://user-ms-xaam.vercel.app/api/submissions/${updateId}`, {
+    const response = await fetch(`https://user-ms-beta.vercel.app/submissions/${updateId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
