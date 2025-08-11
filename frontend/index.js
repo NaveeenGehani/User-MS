@@ -347,7 +347,7 @@ updateForm.addEventListener("submit", async function (event) {
   updateBtn.querySelector('.btn-text').textContent = 'Updating...';
   
   try {
-    const response = await fetch(`https://user-ms-beta.vercel.app/submissions/${updateId}`, {
+    const response = await fetch(`https://user-ms-beta.vercel.app/api/submissions/${updateId}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
