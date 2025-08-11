@@ -80,11 +80,13 @@ async function deleteUser(req, res) {
       .status(500)
       .json({ status: "error", errors: ["Database error"] });
   }
+  /*
   if (!data || data.length === 0) {
     return res
       .status(404)
       .json({ status: "error", errors: ["User not found"] });
   }
+  */
   res
     .status(200)
     .json({ status: "success", message: "User deleted successfully!" });
@@ -160,11 +162,6 @@ async function updateUser(req, res) {
       .status(400)
       .json({ status: "error", errors: ["Invalid education"] });
   }
-  /*
-    if (errors.length > 0) {
-        return res.status(400).json({ status: "error", errors });
-    }
-    */
 
   const { error } = await supabase
     .from("users")
