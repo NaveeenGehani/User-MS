@@ -74,7 +74,7 @@ async function deleteUser(req, res) {
   const { data, error } = await supabase
     .from("users")
     .delete()
-    .eq("id", userId);
+    .eq("id", userId).select("*");
   if (error) {
     return res
       .status(500)
@@ -89,7 +89,7 @@ async function deleteUser(req, res) {
   */
   res
     .status(200)
-    .json({ status: "success", message: "User deleted successfully!" });
+    .json({ status: "success", message: `User deleted successfully! Bye ${data.firstName}` });
 }
 
 // update user
