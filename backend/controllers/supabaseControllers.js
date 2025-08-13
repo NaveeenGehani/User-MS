@@ -89,7 +89,7 @@ async function deleteUser(req, res) {
   */
   res
     .status(200)
-    .json({ status: "success", message: `User deleted successfully! Bye ${data.firstName}` });
+    .json({ status: "success", message: `User deleted successfully! Bye ${data[0]?.firstName || "" }` });
 }
 
 // update user
